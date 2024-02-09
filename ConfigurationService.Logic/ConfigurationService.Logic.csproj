@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConfigurationService.Entities\ConfigurationService.Entities.csproj" />
+    <ProjectReference Include="..\HomePlatform.Server.Entities\ConfigurationService.Entities.csproj" />
+    <ProjectReference Include="..\HomePlatform.Server.Providers\HomePlatform.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MessagesLib">
+      <HintPath>..\dll\MessagesLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
