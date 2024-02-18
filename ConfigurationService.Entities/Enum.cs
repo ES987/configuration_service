@@ -6,18 +6,11 @@ using System.Threading.Tasks;
 
 namespace ConfigurationService.Entities.Configs
 {
-    public enum ServiceError { 
-        Error,
-         BadRequest
-    }
-
-    public enum ProviderRequestType
+    public enum ServiceError
     {
-        Unknow,
-        TurnOn,
-        AddProvider,
-        UpdateProviderDataSource,
-        UpdateProviderConfig,
-
+        Error,
+        BadRequest
     }
+
+    
 }

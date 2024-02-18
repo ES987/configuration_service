@@ -5,6 +5,7 @@ using ConfigurationService.Entities.Logic;
 using MessagesLib.Entities;
 using MessagesLib.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using RequestHelpers.ConfigsHelpers.Enums;
 
 namespace ConfigurationService.Entities.Controllers
 {
@@ -48,7 +49,7 @@ namespace ConfigurationService.Entities.Controllers
             await _senders.SendRequest(new ProviderRequest()
             {
                 ProgramId = request.ProgramId,
-                Request = request.Request,
+                //Request = request.Request,
                 RequestType = request.RequestType,
             });
              

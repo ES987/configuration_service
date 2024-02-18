@@ -7,6 +7,8 @@ using ConfigurationService.Entities.Repositories.Interfaces;
 using IdentityServer4.AccessTokenValidation;
 using LoggerLib.Loggers;
 using MessagesLib.Entities;
+using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 IConfigsLoader loader = new EnvironmentLoader();
+LoggerLib.Interfaces.ILogger logger = new ConsoleLogger();
 #if DEBUG
 loader = new ImMemoryLoader();
 #endif
@@ -40,7 +43,7 @@ builder.Services.AddScoped<IProgramsRepository, ConfigurationService.Entities.Re
 builder.Services.AddScoped<IProvidersRepository, ConfigurationService.Entities.Repositories.Repositories.ProvidersRepository.Repository>();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<LoggerLib.Interfaces.ILogger, ConsoleLogger>();
+builder.Services.AddSingleton<LoggerLib.Interfaces.ILogger>(logger);
 builder.Services.AddMigratorWithProvider(new DataBaseConfig()
 {
     Host = postgresql.Host,
@@ -48,7 +51,7 @@ builder.Services.AddMigratorWithProvider(new DataBaseConfig()
     Username = postgresql.Username,
     Port = postgresql.Port,
     DataBase = postgresql.DataBase
-});
+},Assembly.GetExecutingAssembly());
 
 
 builder.Services.AddSingleton<Senders>(new Senders(new RabbitConfiguration()
@@ -57,7 +60,14 @@ builder.Services.AddSingleton<Senders>(new Senders(new RabbitConfiguration()
     Password = rabbit.Password,
     Port = rabbit.Port,
     UserName = rabbit.UserName
-}));
+},logger));
+
+builder.Services.AddControllers().AddJsonOptions(o =>
+{
+    o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
 builder.Services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme).AddIdentityServerAuthentication(options =>
    {
        options.RequireHttpsMetadata = false;
@@ -86,5 +96,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.Migrate();
 app.Run();

@@ -6,7 +6,7 @@ namespace ConfigsLoaders
 {
     public class ImMemoryLoader : IConfigsLoader
     {
-        private string _ipServer = "192.168.73.128";
+        private string _ipServer = "192.168.73.129";
         public ImMemoryLoader()
         {
 
@@ -17,9 +17,9 @@ namespace ConfigsLoaders
             return new DataBaseConfig()
             {
                 Host = _ipServer,
-                Password = "guest",
-                Port = 5672,
-                Username = "guest",
+                Password = "example",
+                Port = 5432,
+                Username = "postgres",
                 
             };
         }

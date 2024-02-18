@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ConfigurationService.Entities.Configs.Dto;
+using RequestHelpers.ConfigsHelpers.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

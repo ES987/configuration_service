@@ -13,5 +13,10 @@ namespace ConfigurationService.Entities.Repositories.Interfaces
         Task<IEnumerable<ProviderConfigEntity>> GetProviders();
         Task<Guid> Add(ProviderConfigEntity entity);
         Task<IEnumerable<ProviderConfigEntity>> GetByProgramId(Guid id);
+        Task UpdateDataSource(Guid providerId, string dataSorce);
+        Task<Guid> GetAppIdProvider(Guid providerId);
+        Task StopProvider(Guid providerId);
+        Task StartProvider(Guid providerId);
+        Task RemoveProvider(Guid providerId);
     }
 }

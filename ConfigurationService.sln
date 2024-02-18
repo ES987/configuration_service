@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseLib", "Configuratio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigurationService.Repositories", "ConfigurationService.Repositories\ConfigurationService.Repositories.csproj", "{D86235A8-9C97-4272-96FF-723FBB6E0584}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestHelpers", "..\..\HomePlatform.DataSender\RequestHelpers\RequestHelpers.csproj", "{8B4C94B5-32DE-455B-AB9D-EB6163BCC15D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{D86235A8-9C97-4272-96FF-723FBB6E0584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D86235A8-9C97-4272-96FF-723FBB6E0584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D86235A8-9C97-4272-96FF-723FBB6E0584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B4C94B5-32DE-455B-AB9D-EB6163BCC15D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4C94B5-32DE-455B-AB9D-EB6163BCC15D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4C94B5-32DE-455B-AB9D-EB6163BCC15D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4C94B5-32DE-455B-AB9D-EB6163BCC15D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0FD33A47-A9D1-4244-82D6-DD618FF106D5} = {20D214E1-1446-423A-9C24-5C2263526387}
 		{D65549D8-DFB9-4608-8C4D-2FBB59B849F2} = {20D214E1-1446-423A-9C24-5C2263526387}
+		{8B4C94B5-32DE-455B-AB9D-EB6163BCC15D} = {20D214E1-1446-423A-9C24-5C2263526387}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B2D24AF-85BD-447D-999A-67D4F0F8508F}

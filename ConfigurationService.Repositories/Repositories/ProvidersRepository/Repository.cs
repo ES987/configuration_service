@@ -7,6 +7,7 @@ namespace ConfigurationService.Entities.Repositories.Repositories.ProvidersRepos
 {
     public class Repository : IProvidersRepository
     {
+        public const string TableName = "provider_configs";
         private IDbProvider _provider;
         private string _tableName = TableCreater.TableName;
         public Repository(IDbProvider provider)
@@ -29,8 +30,8 @@ namespace ConfigurationService.Entities.Repositories.Repositories.ProvidersRepos
         public async Task<Guid> Add(ProviderConfigEntity entity)
         {
             string json = string.Empty;
-            if (entity.JsonConfig != null) 
-                json = JsonSerializer.Serialize(entity.JsonConfig);
+
+            json = JsonSerializer.Serialize(entity.JsonConfig);
 
             string sql = $"INSERT INTO {_tableName} ({Id}, {JsonConfig},{ProviderType},{DataSource},{Description},{ProgramId},{IsStoped}) " +
                 $"VALUES " +
@@ -43,18 +44,52 @@ namespace ConfigurationService.Entities.Repositories.Repositories.ProvidersRepos
                 DataSource = entity.DataSource,
                 Description = entity.Description,
                 ProgramId = entity.ProgramId,
-                Type = entity.Type,
+                Type = entity.Type.ToString(),
                 IsStoped = entity.IsStoped,
             });
             return entity.Id;
         }
 
 
+        public Task UpdateDataSource(Guid providerId, string dataSorce)
+        {
+            string sql = $"UPDATE {_tableName} SET {DataSource}  = @source where {Id} = @id";
+            return _provider.ExecuteAsync(sql, new
+            {
+                source = dataSorce,
+                id = providerId
+            });
+        }
+
+        public Task StopProvider(Guid providerId)
+        {
+            string sql = $"UPDATE {_tableName} SET {IsStoped} = true where {Id} = @id";
+            return _provider.ExecuteAsync(sql, new { id = providerId });
+        }
+
+        public Task<Guid> GetAppIdProvider(Guid providerId)
+        {
+            string sql = $"SELECT {ProgramId} FROM {_tableName} WHERE {Id} = @id";
+            return _provider.QueryFirstOrDefaultAsync<Guid>(sql, new { id = providerId });
+        }
+
 
         public Task<IEnumerable<ProviderConfigEntity>> GetByProgramId(Guid id)
         {
             string sql = $"SELECT * FROM {_tableName} WHERE {ProgramId} = @id";
             return _provider.QueryAsync<ProviderConfigEntity>(sql, new { id = id });
+        }
+
+        public Task StartProvider(Guid providerId)
+        {
+            string sql = $"UPDATE {_tableName} SET {IsStoped} = false where {Id} = @id";
+            return _provider.ExecuteAsync(sql, new { id = providerId });
+        }
+
+        public Task RemoveProvider(Guid providerId)
+        {
+            string sql = $"DELETE FROM {_tableName} where {Id} = @id";
+            return _provider.ExecuteAsync(sql, new { id = providerId });
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ConfigurationService.Entities.Repositories.Repositories.ProvidersRepos
        $"{ProviderType}  text NOT NULL," +
        $"{DataSource} text," +
        $"{Description} text," +
-       $"{ProgramId} uuid REFERENCES {ProgramsRepository.TableCreater.TableName} (id)," +
+       $"{ProgramId} uuid REFERENCES {ProgramsRepository.Repository.TableName} ({ProgramsRepository.Columns.Id})," +
        $"{IsStoped} boolean" +
     "); ";
             return _provider.QueryAsync(sql);
