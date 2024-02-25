@@ -11,19 +11,25 @@ namespace ConfigurationService.Entities.Repositories.Repositories.ProgramsReposi
     {
         public const string TableName = "programs";
         private IDbProvider _provider;
-        public Repository(IDbProvider provider)
+        private IProvidersRepository _providersRepository;
+        public Repository(IDbProvider provider, IProvidersRepository providersRepository)
         {
             _provider = provider;
+            _providersRepository = providersRepository;
         }
 
         public Task<IEnumerable<ProgramEntity>> GetAll()
         {
-            string sql = $"SELECT * FROM {TableName}";
+            string sql = $"SELECT * FROM {TableName} ";
             return _provider.QueryAsync<ProgramEntity>(sql);
+
         }
-        public async Task<Guid> Add(UserInfo user)
+
+        public async Task<Guid> Add()
         {
-            string sql = $"INSERT INTO {TableName} ({Id} ) VALUES (@id ) RETURNING {Id}";
+
+            Int32 unixTimestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            string sql = $"INSERT INTO {TableName} ({Id},{DateCteate} ) VALUES (@id,{unixTimestamp} ) RETURNING {Id}";
             var programId = Guid.NewGuid();
             await _provider.QueryAsync(sql, new
             {

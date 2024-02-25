@@ -5,7 +5,7 @@ namespace ConfigurationService.Entities.Repositories.Interfaces
 {
     public interface IProgramsRepository
     {
-        Task<Guid> Add( UserInfo user);
+        Task<Guid> Add();
         Task<IEnumerable<ProgramEntity>> GetAll();
 
 

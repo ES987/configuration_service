@@ -4,8 +4,11 @@ using ConfigurationService.Entities.Configs.Dto;
 using ConfigurationService.Entities.Logic;
 using ConfigurationService.Entities.Repositories.Interfaces;
 using ConfigurationService.Entities.Requests;
+using HomePlatform.Logic.Entities;
 using Microsoft.AspNetCore.Mvc;
+
 using RequestHelpers.ConfigsHelpers.Enums;
+using System.Text.Json;
 
 namespace ConfigurationService.Entities.Controllers
 {
@@ -137,6 +140,16 @@ namespace ConfigurationService.Entities.Controllers
             try
             {
                 var res = await _repository.GetByProgramId(programId);
+
+                foreach (var item in res)
+                {
+                    switch (item.Type) {
+                        case ProviderType.Arduino:
+                            item.JsonConfig = JsonSerializer.Deserialize<ArduinoConfig>(item.JsonConfig.ToString());
+                            break;
+                    }
+                }
+
                 return Responce.CreateSuccesResponce(res.Select(p => new ProviderDTO()
                 {
                     Id = p.Id,

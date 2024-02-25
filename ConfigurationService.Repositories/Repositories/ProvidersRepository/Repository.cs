@@ -51,6 +51,7 @@ namespace ConfigurationService.Entities.Repositories.Repositories.ProvidersRepos
         }
 
 
+
         public Task UpdateDataSource(Guid providerId, string dataSorce)
         {
             string sql = $"UPDATE {_tableName} SET {DataSource}  = @source where {Id} = @id";

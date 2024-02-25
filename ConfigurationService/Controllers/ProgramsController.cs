@@ -25,7 +25,7 @@ namespace ConfigurationService.Entities.Controllers
         {
             try
             {
-                var result = await _repository.Add(GetUserInfo());
+                var result = await _repository.Add();
                 return Responce.CreateSuccesResponce(new AddProgramResponse()
                 {
                     Id = result
@@ -44,11 +44,14 @@ namespace ConfigurationService.Entities.Controllers
             try
             {
                 var res = await _repository.GetAll();
-
-                return Responce.CreateSuccesResponce(res.Select(p => new ProgramDTO()
+                var resp = Responce.CreateSuccesResponce(res.Select(p => new ProgramDTO()
                 {
                     Id = p.Id,
+                    DateCteate = p.DateCteate,
+                    Description = p.Description,
+                    ProgramType = p.ProgramType,
                 }));
+                return resp;
             }
             catch (Exception ex)
             {
@@ -56,14 +59,6 @@ namespace ConfigurationService.Entities.Controllers
             }
         }
 
-        [NonAction]
-        private UserInfo GetUserInfo()
-        {
-            return new UserInfo()
-            {
-                Id = User.FindFirstValue(JwtClaimTypes.ClientId),
-                Username = User.FindFirstValue("username"),
-            };
-        }
+        
     }
 }
