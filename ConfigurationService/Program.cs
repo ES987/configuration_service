@@ -4,6 +4,10 @@ using ConfigurationService.Database.Entities;
 using ConfigurationService.Database.Extensions;
 using ConfigurationService.Entities.Logic;
 using ConfigurationService.Entities.Repositories.Interfaces;
+using ConfigurationService.Logic.Handlers.Loki;
+using ConfigurationService.Logic.Handlers.Loki.Interfaces;
+using ConfigurationService.Logic.Handlers.Providers;
+using ConfigurationService.Logic.Handlers.Providers.Interfaces;
 using ConfigurationService.Repositories.Interfaces;
 using IdentityServer4.AccessTokenValidation;
 using LoggerLib.Loggers;
@@ -39,11 +43,13 @@ postgresql.DataBase = "configs";
 #endif
 
 
-
+builder.Services.AddSingleton<IConfigsLoader>(loader);
 builder.Services.AddScoped<IProgramsRepository, ConfigurationService.Entities.Repositories.Repositories.ProgramsRepository.Repository>();
 builder.Services.AddScoped<IProvidersRepository, ConfigurationService.Entities.Repositories.Repositories.ProvidersRepository.Repository>();
 builder.Services.AddScoped<IParametersRepository, ConfigurationService.Repositories.Repositories.Parameters.Repository>();
 builder.Services.AddScoped<IParametersBindingRepository, ConfigurationService.Repositories.Repositories.ParametersBindingRepository.Repository>();
+builder.Services.AddScoped<IHttpProvider, HttpProvider>();
+builder.Services.AddScoped<ILokiHandler, LokiHandler>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<LoggerLib.Interfaces.ILogger>(logger);

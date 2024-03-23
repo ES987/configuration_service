@@ -20,8 +20,13 @@ namespace ConfigsLoaders
                 Password = "example",
                 Port = 5432,
                 Username = "postgres",
-                
+
             };
+        }
+
+        public string GetLokiUrl()
+        {
+            return $"http://{_ipServer}:3100";
         }
 
         public RabbitConfiguration GetRabbitConfiguration()

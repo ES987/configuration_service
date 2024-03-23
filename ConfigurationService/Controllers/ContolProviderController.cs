@@ -24,26 +24,26 @@ namespace ConfigurationService.Entities.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("turnOn")]
-        public async Task<Responce> TurnOn([FromBody] ProviderTurnOnRequest request)
+        public async Task<Response> TurnOn([FromBody] ProviderTurnOnRequest request)
         {
             if (request.ProgramId == Guid.Empty)
             {
-                return Responce.CreateFailResponce("Не указан id программы", ServiceError.BadRequest);
+                return Api.Messages.Response.CreateFailResponce("Не указан id программы", ServiceError.BadRequest);
             }
 
             if (request.Request.ProviderId == Guid.Empty)
             {
-                return Responce.CreateFailResponce("Не указан id провайдера", ServiceError.BadRequest);
+                return Api.Messages.Response.CreateFailResponce("Не указан id провайдера", ServiceError.BadRequest);
             }
 
             if (request.RequestType == ProviderRequestType.Unknow)
             {
-                return Responce.CreateFailResponce("Неизвестный тип запроса", ServiceError.BadRequest);
+                return Api.Messages.Response.CreateFailResponce("Неизвестный тип запроса", ServiceError.BadRequest);
             }
 
             if (request.Request == null)
             {
-                return Responce.CreateFailResponce("Запрос на включение/выключение null", ServiceError.BadRequest);
+                return Api.Messages.Response.CreateFailResponce("Запрос на включение/выключение null", ServiceError.BadRequest);
             }
 
             await _senders.SendRequest(new ProviderRequest()
@@ -53,7 +53,7 @@ namespace ConfigurationService.Entities.Controllers
                 RequestType = request.RequestType,
             });
              
-            return Responce.CreateSuccesResponce();
+            return Api.Messages.Response.CreateSuccesResponce();
         }
     }
 }

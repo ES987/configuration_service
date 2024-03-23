@@ -21,30 +21,30 @@ namespace ConfigurationService.Entities.Controllers
         }
 
         [HttpPost]
-        public async Task<Responce> Add()
+        public async Task<Response> Add()
         {
             try
             {
                 var result = await _repository.Add();
-                return Responce.CreateSuccesResponce(new AddProgramResponse()
+                return Api.Messages.Response.CreateSuccesResponce(new AddProgramResponse()
                 {
                     Id = result
                 });
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
 
 
         [HttpGet]
-        public async Task<Responce> GetAll()
+        public async Task<Response> GetAll()
         {
             try
             {
                 var res = await _repository.GetAll();
-                var resp = Responce.CreateSuccesResponce(res.Select(p => new ProgramDTO()
+                var resp = Api.Messages.Response.CreateSuccesResponce(res.Select(p => new ProgramDTO()
                 {
                     Id = p.Id,
                     DateCteate = p.DateCteate,
@@ -55,7 +55,7 @@ namespace ConfigurationService.Entities.Controllers
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
 

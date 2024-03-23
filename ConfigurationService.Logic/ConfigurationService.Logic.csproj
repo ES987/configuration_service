@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConfigsLoaders\ConfigsLoaders.csproj" />
     <ProjectReference Include="..\ConfigurationService.Entities\ConfigurationService.Entities.csproj" />
   </ItemGroup>
 

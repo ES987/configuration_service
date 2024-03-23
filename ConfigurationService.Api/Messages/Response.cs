@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace ConfigurationService.Api.Messages
 {
-    public class Responce
+    public class Response
     {
         public bool IsSuccses { get; set; }
         public ErrorMessage? Error { get; set; }
         public object Result { get; set; }
         public Enum ErrorType { get; set; }
 
-        public static Responce CreateSuccesResponce(object result = null)
+        public static Response CreateSuccesResponce(object result = null)
         {
-            return new Responce
+            return new Response
             {
                 IsSuccses = true,
                 Result = result
             };
         }
-        public static Responce CreateFailResponce(string message, Enum errorType)
+        public static Response CreateFailResponce(string message, Enum errorType)
         {
-            return new Responce
+            return new Response
             {
                 IsSuccses = true,
                 Error = new ErrorMessage()

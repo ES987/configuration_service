@@ -17,12 +17,12 @@ namespace ConfigurationService.Controllers
 
 
         [HttpGet("ByProvider")]
-        public async Task<Responce> Get([FromQuery] Guid providerId)
+        public async Task<Response> Get([FromQuery] Guid providerId)
         {
             try
             {
                 var res = await _repository.GetByProvider(providerId);
-                return Responce.CreateSuccesResponce(res.Select(p => new ParametersBingingDto()
+                return Api.Messages.Response.CreateSuccesResponce(res.Select(p => new ParametersBingingDto()
                 {
                     Channel = p.Channel,
                     Id = p.Id,
@@ -32,13 +32,13 @@ namespace ConfigurationService.Controllers
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
 
 
         [HttpPost]
-        public async Task<Responce> Add([FromBody] ParametersBingingDto dto)
+        public async Task<Response> Add([FromBody] ParametersBingingDto dto)
         {
             try
             {
@@ -51,23 +51,23 @@ namespace ConfigurationService.Controllers
 
                 });
 
-                return Responce.CreateSuccesResponce(id);
+                return Api.Messages.Response.CreateSuccesResponce(id);
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
 
         [HttpDelete]
-        public async Task<Responce> Remove(int id) {
+        public async Task<Response> Remove(int id) {
             try
             {
                 await _repository.Remove(id);
-                return Responce.CreateSuccesResponce();
+                return Api.Messages.Response.CreateSuccesResponce();
             }
             catch (Exception ex) {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
     }

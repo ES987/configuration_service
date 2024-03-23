@@ -17,11 +17,11 @@ namespace ConfigurationService.Controllers
 
 
         [HttpGet]
-        public async Task<Responce> Get()
+        public async Task<Response> Get()
         {
             try {
                 var res = await _repository.Get();
-                return Responce.CreateSuccesResponce(res.Select(p => new ParameterDto()
+                return Api.Messages.Response.CreateSuccesResponce(res.Select(p => new ParameterDto()
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -29,7 +29,7 @@ namespace ConfigurationService.Controllers
             }
            catch (Exception ex)
             {
-                return Responce.CreateFailResponce("", ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce("", ServiceError.Error);
             }
 
         }

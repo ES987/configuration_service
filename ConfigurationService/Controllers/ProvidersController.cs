@@ -24,7 +24,7 @@ namespace ConfigurationService.Entities.Controllers
         }
 
         [HttpPost]
-        public async Task<Responce> Add([FromBody] ProviderDTO dto)
+        public async Task<Response> Add([FromBody] ProviderDTO dto)
         {
             try
             {
@@ -46,16 +46,16 @@ namespace ConfigurationService.Entities.Controllers
                     Request = dto
                 });
 
-                return Responce.CreateSuccesResponce(id);
+                return Api.Messages.Response.CreateSuccesResponce(id);
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
 
         [HttpPut("UpdateDataSouce")]
-        public async Task<Responce> UpdateDataSouce([FromQuery] UpdateDataSourceRequest request)
+        public async Task<Response> UpdateDataSouce([FromQuery] UpdateDataSourceRequest request)
         {
             try
             {
@@ -66,17 +66,17 @@ namespace ConfigurationService.Entities.Controllers
                     await _senders.UpdateDataSource(appid, request);
                 }
 
-                return Responce.CreateSuccesResponce();
+                return Api.Messages.Response.CreateSuccesResponce();
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce("", ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce("", ServiceError.Error);
             }
 
         }
 
         [HttpPost("StopProvider")]
-        public async Task<Responce> StopProvider(Guid providerId)
+        public async Task<Response> StopProvider(Guid providerId)
         {
             try
             {
@@ -87,16 +87,16 @@ namespace ConfigurationService.Entities.Controllers
                     await _repository.StopProvider(providerId);
                     await _senders.StopProvider(appid, providerId);
                 }
-                return Responce.CreateSuccesResponce();
+                return Api.Messages.Response.CreateSuccesResponce();
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce("", ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce("", ServiceError.Error);
             }
         }
 
         [HttpPost("StartProvider")]
-        public async Task<Responce> StartProvider(Guid providerId)
+        public async Task<Response> StartProvider(Guid providerId)
         {
             try
             {
@@ -106,16 +106,16 @@ namespace ConfigurationService.Entities.Controllers
                     await _repository.StartProvider(providerId);
                     await _senders.StartProvider(appid, providerId);
                 }
-                return Responce.CreateSuccesResponce();
+                return Api.Messages.Response.CreateSuccesResponce();
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce("", ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce("", ServiceError.Error);
             }
         }
 
         [HttpDelete]
-        public async Task<Responce> Remove(Guid providerId)
+        public async Task<Response> Remove(Guid providerId)
         {
             try
             {
@@ -126,16 +126,16 @@ namespace ConfigurationService.Entities.Controllers
                     await _repository.RemoveProvider(providerId);
                     await _senders.RemoveProvider(appid, providerId);
                 }
-                return Responce.CreateSuccesResponce();
+                return Api.Messages.Response.CreateSuccesResponce();
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce("", ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce("", ServiceError.Error);
             }
         }
 
         [HttpGet("ByProgram")]
-        public async Task<Responce> GetByProgramId([FromQuery] Guid programId)
+        public async Task<Response> GetByProgramId([FromQuery] Guid programId)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace ConfigurationService.Entities.Controllers
                     }
                 }
 
-                return Responce.CreateSuccesResponce(res.Select(p => new ProviderDTO()
+                return Api.Messages.Response.CreateSuccesResponce(res.Select(p => new ProviderDTO()
                 {
                     Id = p.Id,
                     DataSource = p.DataSource,
@@ -164,8 +164,10 @@ namespace ConfigurationService.Entities.Controllers
             }
             catch (Exception ex)
             {
-                return Responce.CreateFailResponce(ex.Message, ServiceError.Error);
+                return Api.Messages.Response.CreateFailResponce(ex.Message, ServiceError.Error);
             }
         }
+
+         
     }
 }

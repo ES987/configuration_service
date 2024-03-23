@@ -6,5 +6,6 @@ namespace ConfigsLoaders.Interfaces
     {
         public RabbitConfiguration GetRabbitConfiguration();
         public DataBaseConfig GetDbConfiguration();
+        public string GetLokiUrl();
     }
 }

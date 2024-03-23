@@ -17,6 +17,11 @@ namespace ConfigsLoaders
             };
         }
 
+        public string GetLokiUrl()
+        {
+            return Environment.GetEnvironmentVariable("loki");
+        }
+
         public RabbitConfiguration GetRabbitConfiguration()
         {
             return new RabbitConfiguration()
